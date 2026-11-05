@@ -1,0 +1,43 @@
+name: Refresh data
+
+# Re-executes every notebook against the live endpoints and opens a pull request
+# with the updated _freeze/ cache.
+
+on:
+  schedule:
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: false
+
+      - name: Re-execute all documents
+        run: |
+          rm -rf _freeze
+          quarto render --to html --execute
+
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "Refresh frozen data"
+          branch: refresh-data
+          title: "Refresh frozen data"
+          body: "Automated re-execution of all notebooks against the live CPS, Wikidata and DNB endpoints."
+          add-paths: _freeze

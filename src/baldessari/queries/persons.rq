@@ -1,0 +1,16 @@
+PREFIX cps: <https://cps.tibwiki.io/entity/>
+PREFIX cpsd: <https://cps.tibwiki.io/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Persons (type Q2) with external identifiers and the number of works they created (P6).
+SELECT ?item (SAMPLE(?l) AS ?label) (SAMPLE(?wd) AS ?wikidata) (SAMPLE(?gnd) AS ?gnd)
+       (COUNT(DISTINCT ?work) AS ?works)
+WHERE {
+  ?item cpsd:P3 cps:Q2 .
+  OPTIONAL { ?item rdfs:label ?l . FILTER(LANG(?l) = "en") }
+  OPTIONAL { ?item cpsd:P24 ?wd }
+  OPTIONAL { ?item cpsd:P25 ?gnd }
+  OPTIONAL { ?work cpsd:P6 ?item }
+}
+GROUP BY ?item
+ORDER BY DESC(?works) ?label

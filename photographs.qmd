@@ -1,0 +1,25 @@
+# Photographs {#sec-photographs}
+
+Photographs are items of type *photograph* (Q17).
+
+```{python}
+#| label: setup
+from baldessari import cps, plots, table, works_table
+photos = cps.photographs()
+```
+
+The CPS Wikibase contains **`{python} len(photos)`** photographs.
+
+```{python}
+#| label: tbl-photographs
+#| tbl-cap: "Photographs in the CPS Wikibase."
+table(works_table(photos))
+```
+
+## Works per period
+
+```{python}
+#| label: fig-photos-per-year
+#| fig-cap: "Photographs by year of creation (five-year bins)."
+plots.per_year(photos)
+```

@@ -1,0 +1,46 @@
+PREFIX cps: <https://cps.tibwiki.io/entity/>
+PREFIX cpsd: <https://cps.tibwiki.io/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Works of one or more types. {{TYPES}} is replaced with e.g. "cps:Q1 cps:Q15".
+SELECT ?item
+       (SAMPLE(?l) AS ?label)
+       (SAMPLE(?d) AS ?date)
+       (SAMPLE(?cl) AS ?creator)
+       (SAMPLE(?ol) AS ?owner)
+       (SAMPLE(?sl) AS ?series)
+       (SAMPLE(?h) AS ?height)
+       (SAMPLE(?w) AS ?width)
+       (SAMPLE(?dp) AS ?depth)
+       (SAMPLE(?inv) AS ?inventoryNo)
+       (SAMPLE(?cat) AS ?catalogueNo)
+       (SAMPLE(?wd) AS ?wikidata)
+       (SAMPLE(?img) AS ?image)
+       (SAMPLE(?dst) AS ?dateStated)
+       (SAMPLE(?ost) AS ?objectTypeStated)
+       (SAMPLE(?mst) AS ?materialsStated)
+       (GROUP_CONCAT(DISTINCT ?tl; separator = "; ") AS ?types)
+       (GROUP_CONCAT(DISTINCT ?ml; separator = "; ") AS ?materials)
+WHERE {
+  VALUES ?type { {{TYPES}} }
+  ?item cpsd:P3 ?type .
+  OPTIONAL { ?item rdfs:label ?l . FILTER(LANG(?l) = "en") }
+  OPTIONAL { ?item cpsd:P7 ?d }
+  OPTIONAL { ?item cpsd:P6 ?c . ?c rdfs:label ?cl . FILTER(LANG(?cl) = "en") }
+  OPTIONAL { ?item cpsd:P22 ?o . ?o rdfs:label ?ol . FILTER(LANG(?ol) = "en") }
+  OPTIONAL { ?item cpsd:P18 ?s . ?s rdfs:label ?sl . FILTER(LANG(?sl) = "en") }
+  OPTIONAL { ?item cpsd:P11 ?h }
+  OPTIONAL { ?item cpsd:P12 ?w }
+  OPTIONAL { ?item cpsd:P13 ?dp }
+  OPTIONAL { ?item cpsd:P14 ?inv }
+  OPTIONAL { ?item cpsd:P15 ?cat }
+  OPTIONAL { ?item cpsd:P24 ?wd }
+  OPTIONAL { ?item cpsd:P17 ?img }
+  OPTIONAL { ?item cpsd:P3 ?t2 . ?t2 rdfs:label ?tl . FILTER(LANG(?tl) = "en") }
+  OPTIONAL { ?item cpsd:P10 ?m . ?m rdfs:label ?ml . FILTER(LANG(?ml) = "en") }
+  OPTIONAL { ?item cpsd:P36 ?dst }
+  OPTIONAL { ?item cpsd:P37 ?ost }
+  OPTIONAL { ?item cpsd:P38 ?mst }
+}
+GROUP BY ?item
+ORDER BY ?date ?label

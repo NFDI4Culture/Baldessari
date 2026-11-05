@@ -1,0 +1,25 @@
+# Materials {#sec-materials}
+
+Materials are items of type *material* (Q5). Works link to them with the property *Material* (P10). Where available, materials are connected to Wikidata (P24) or the Art & Architecture Thesaurus (P26).
+
+```{python}
+#| label: setup
+from baldessari import cps, plots, table
+materials = cps.materials()
+```
+
+The CPS Wikibase describes **`{python} len(materials)`** materials, of which **`{python} int((materials["works"] > 0).sum())`** are used by at least one work.
+
+```{python}
+#| label: fig-materials
+#| fig-cap: "The most frequently used materials."
+plots.bar_counts(materials.head(15), "label", "works")
+```
+
+```{python}
+#| label: tbl-materials
+#| tbl-cap: "Materials, number of works and external identifiers."
+shown = materials[["qid", "label", "works", "wikidata", "aat"]]
+shown.columns = ["ID", "Material", "Works", "Wikidata", "AAT"]
+table(shown)
+```

@@ -1,0 +1,19 @@
+PREFIX cps: <https://cps.tibwiki.io/entity/>
+PREFIX cpsd: <https://cps.tibwiki.io/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Exhibitions (Q3) with host/venue, dates, catalogue and Wikidata link.
+SELECT ?item (SAMPLE(?l) AS ?label) (SAMPLE(?hl) AS ?host) (SAMPLE(?start) AS ?start)
+       (SAMPLE(?end) AS ?end) (SAMPLE(?catl) AS ?catalogue) (SAMPLE(?wd) AS ?wikidata)
+       (COUNT(DISTINCT ?work) AS ?works)
+WHERE {
+  ?item cpsd:P3 cps:Q3 .
+  OPTIONAL { ?item rdfs:label ?l . FILTER(LANG(?l) = "en") }
+  OPTIONAL { ?item cpsd:P16 ?h . ?h rdfs:label ?hl . FILTER(LANG(?hl) = "en") }
+  OPTIONAL { ?item cpsd:P27 ?start }
+  OPTIONAL { ?item cpsd:P28 ?end }
+  OPTIONAL { ?item cpsd:P47 ?cat . ?cat rdfs:label ?catl . FILTER(LANG(?catl) = "en") }
+  OPTIONAL { ?item cpsd:P24 ?wd }
+  OPTIONAL { ?work cpsd:P21 ?item }
+}
+GROUP BY ?item

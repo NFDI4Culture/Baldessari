@@ -1,0 +1,20 @@
+# Quarto
+/.quarto/
+/_book/
+/_site/
+*_files/
+.jupyter_cache/
+
+# Python
+.venv/
+__pycache__/
+*.egg-info/
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# _freeze/ is intentionally committed (cached execution results)
+
+**/*.quarto_ipynb

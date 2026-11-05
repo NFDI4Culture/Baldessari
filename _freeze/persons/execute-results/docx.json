@@ -1,0 +1,11 @@
+{
+  "hash": "bc7e342a27e1c8d21c16ab7ddea6a9d9",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "# Persons {#sec-persons}\n\nPersons are items of type *person* (Q2). They are creators (P6) of works or authors (P40) of the catalogue, and can be linked to Wikidata (P24) and the Gemeinsame Normdatei (GND, P25).\n\n\n\n::: {#tbl-persons .cell tbl-cap='Persons in the CPS Wikibase with their identifiers.' execution_count=2}\n\n::: {.cell-output .cell-output-display .cell-output-markdown execution_count=2}\n| ID   | Name                  |   Works created | Wikidata   | GND       |\n|:-----|:----------------------|----------------:|:-----------|:----------|\n| Q47  | John Baldessari       |              72 | Q683378    | 118506153 |\n| Q48  | Laurence Sterne       |               1 | Q218960    | 11861794X |\n| Q209 | Diedrich Diederichsen |               0 |            | 130448001 |\n| Q208 | Meg Cranston          |               0 |            | 119555522 |\n| Q210 | Thomas Weski          |               0 |            | 119093022 |\n:::\n:::\n\n\n",
+    "supporting": [
+      "persons_files\\figure-docx"
+    ],
+    "filters": []
+  }
+}

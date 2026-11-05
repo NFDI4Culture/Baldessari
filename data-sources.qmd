@@ -1,0 +1,17 @@
+# Data sources and licences {#sec-data-sources}
+
+| Source | Endpoint | Licence / terms |
+|--------|----------|-----------------|
+| CPS Wikibase | <https://cps.tibwiki.io/query/proxy/sparql> | See the licence statement on the [CPS wiki](https://cps.tibwiki.io/) |
+| Wikidata | <https://query.wikidata.org/sparql> | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Deutsche Nationalbibliothek | <https://services.dnb.de/sru/dnb> | DNB bibliographic data are available under CC0 1.0 (see the DNB data-licence page) |
+
+The text of this book is licensed under CC BY 4.0 and the code under the MIT licence.
+
+```{python}
+#| label: build-info
+from datetime import datetime, timezone
+from baldessari import cps, wikidata, dnb
+print(f"Built: {datetime.now(timezone.utc):%Y-%m-%d %H:%M} UTC")
+print(f"CPS endpoint: {cps.ENDPOINT}")
+```

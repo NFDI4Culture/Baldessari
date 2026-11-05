@@ -1,0 +1,83 @@
+project:
+  type: book
+  output-dir: _book
+
+execute:
+  freeze: auto
+  enabled: true
+  echo: false
+  warning: false
+
+book:
+  title: "John Baldessari in Linked Open Data"
+  subtitle: "A data-driven book from the CPS Wikibase, Wikidata and the DNB"
+  author: "NFDI4Culture"
+  date: today
+  output-file: "Baldessari"
+  site-url: https://nfdi4culture.github.io/Baldessari/
+  repo-url: https://github.com/NFDI4Culture/Baldessari
+  repo-actions: [edit, issue]
+  search: true
+  downloads: [pdf, docx, epub]
+  sharing: [twitter, linkedin]
+  chapters:
+    - index.qmd
+    - introduction.qmd
+    - part: "The CPS catalogue"
+      chapters:
+        - artworks.ipynb
+        - paintings.qmd
+        - photographs.qmd
+        - films.qmd
+        - materials.qmd
+        - persons.qmd
+        - exhibitions.qmd
+    - part: "External sources"
+      chapters:
+        - wikidata.qmd
+        - dnb.qmd
+    - summary.qmd
+    - references.qmd
+  appendices:
+    - data-sources.qmd
+
+bibliography: references.bib
+lang: en
+license: "CC BY 4.0"
+
+fig-format: png
+fig-dpi: 150
+
+format:
+  html:
+    theme:
+      light: [cosmo, assets/styles.scss]
+      dark: [cosmo, assets/styles.scss]
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-tools: true
+    code-fold: true
+    link-external-newwindow: true
+    df-print: kable
+  typst:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    papersize: a4
+    fontsize: 10pt
+    margin:
+      x: 2.5cm
+      y: 2.5cm
+    keep-typ: false
+  docx:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    reference-doc: assets/reference.docx
+  epub:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    cover-image: assets/cover.png
+    epub-metadata: assets/epub-metadata.xml

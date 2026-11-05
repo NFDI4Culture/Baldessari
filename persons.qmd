@@ -1,0 +1,17 @@
+# Persons {#sec-persons}
+
+Persons are items of type *person* (Q2). They are creators (P6) of works or authors (P40) of the catalogue, and can be linked to Wikidata (P24) and the Gemeinsame Normdatei (GND, P25).
+
+```{python}
+#| label: setup
+from baldessari import cps, table
+persons = cps.persons()
+```
+
+```{python}
+#| label: tbl-persons
+#| tbl-cap: "Persons in the CPS Wikibase with their identifiers."
+shown = persons[["qid", "label", "works", "wikidata", "gnd"]]
+shown.columns = ["ID", "Name", "Works created", "Wikidata", "GND"]
+table(shown)
+```

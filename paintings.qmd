@@ -1,0 +1,49 @@
+# Paintings {#sec-paintings}
+
+Paintings are items of type *painting* (Q15) in the CPS Wikibase. Most of them are also typed as *artwork*.
+
+```{python}
+#| label: setup
+from baldessari import cps, plots, table, works_table
+paintings = cps.paintings()
+```
+
+The CPS Wikibase contains **`{python} len(paintings)`** paintings.
+
+```{python}
+#| label: tbl-paintings
+#| tbl-cap: "Paintings in the CPS Wikibase."
+table(works_table(paintings))
+```
+
+## Materials
+
+```{python}
+#| label: tbl-painting-materials
+#| tbl-cap: "Materials used for paintings, by number of paintings."
+mats = (
+    paintings["materials"].str.split("; ").explode().replace("", None).dropna()
+    .value_counts().rename_axis("Material").reset_index(name="Paintings")
+)
+table(mats)
+```
+
+## Dimensions
+
+```{python}
+#| label: fig-painting-sizes
+#| fig-cap: "Height and width of paintings with recorded dimensions."
+import matplotlib.pyplot as plt
+
+sized = paintings.dropna(subset=["height", "width"])
+fig, ax = plt.subplots(figsize=(6, 4))
+ax.scatter(sized["width"], sized["height"], color="#3366CC")
+ax.set_xlabel("Width (cm)")
+ax.set_ylabel("Height (cm)")
+ax.spines[["top", "right"]].set_visible(False)
+fig.tight_layout()
+plt.close(fig)
+fig
+```
+
+@fig-painting-sizes plots the `{python} len(sized)` paintings for which both height and width are recorded.

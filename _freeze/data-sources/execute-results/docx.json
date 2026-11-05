@@ -1,0 +1,11 @@
+{
+  "hash": "64e8b0e67ba65993fd86c3b43779ae8a",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "# Data sources and licences {#sec-data-sources}\n\n| Source | Endpoint | Licence / terms |\n|--------|----------|-----------------|\n| CPS Wikibase | <https://cps.tibwiki.io/query/proxy/sparql> | See the licence statement on the [CPS wiki](https://cps.tibwiki.io/) |\n| Wikidata | <https://query.wikidata.org/sparql> | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |\n| Deutsche Nationalbibliothek | <https://services.dnb.de/sru/dnb> | DNB bibliographic data are available under CC0 1.0 (see the DNB data-licence page) |\n\nThe text of this book is licensed under CC BY 4.0 and the code under the MIT licence.\n\n::: {#build-info .cell execution_count=1}\n\n::: {.cell-output .cell-output-stdout}\n```\nBuilt: 2026-11-05 18:50 UTC\nCPS endpoint: https://cps.tibwiki.io/query/proxy/sparql\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "data-sources_files\\figure-docx"
+    ],
+    "filters": []
+  }
+}

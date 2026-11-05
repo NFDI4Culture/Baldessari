@@ -1,0 +1,21 @@
+PREFIX cps: <https://cps.tibwiki.io/entity/>
+PREFIX cpsd: <https://cps.tibwiki.io/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Catalogues (Q205) with bibliographic identifiers (ISBN P43, DNB edition P44, URL P45).
+SELECT ?item (SAMPLE(?l) AS ?title) (SAMPLE(?sub) AS ?subtitle)
+       (GROUP_CONCAT(DISTINCT ?al; separator = "; ") AS ?authors)
+       (SAMPLE(?pl) AS ?publisher) (SAMPLE(?pd) AS ?published)
+       (SAMPLE(?isbn) AS ?isbn) (SAMPLE(?dnb) AS ?dnbId) (SAMPLE(?url) AS ?url)
+WHERE {
+  ?item cpsd:P3 cps:Q205 .
+  OPTIONAL { ?item rdfs:label ?l . FILTER(LANG(?l) = "en") }
+  OPTIONAL { ?item cpsd:P39 ?sub }
+  OPTIONAL { ?item cpsd:P40 ?a . ?a rdfs:label ?al . FILTER(LANG(?al) = "en") }
+  OPTIONAL { ?item cpsd:P41 ?p . ?p rdfs:label ?pl . FILTER(LANG(?pl) = "en") }
+  OPTIONAL { ?item cpsd:P42 ?pd }
+  OPTIONAL { ?item cpsd:P43 ?isbn }
+  OPTIONAL { ?item cpsd:P44 ?dnb }
+  OPTIONAL { ?item cpsd:P45 ?url }
+}
+GROUP BY ?item

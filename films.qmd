@@ -1,0 +1,30 @@
+# Films {#sec-films}
+
+The CPS Wikibase distinguishes several film and video types, such as *Super-8 film loop*, *film loop*, *16 mm film* and *video loop*. This chapter groups them together.
+
+```{python}
+#| label: setup
+from baldessari import cps, plots, table, works_table
+films = cps.films()
+```
+
+The CPS Wikibase contains **`{python} len(films)`** works of a film or video type.
+
+```{python}
+#| label: tbl-films
+#| tbl-cap: "Films and video works in the CPS Wikibase."
+table(works_table(films))
+```
+
+## Film types
+
+```{python}
+#| label: fig-film-types
+#| fig-cap: "Number of film and video works per type."
+film_types = (
+    films["types"].str.split("; ").explode()
+    .loc[lambda s: s != "artwork"]
+    .value_counts().rename_axis("Type").reset_index(name="Works")
+)
+plots.bar_counts(film_types, "Type", "Works")
+```

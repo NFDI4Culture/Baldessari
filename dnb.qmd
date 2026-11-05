@@ -1,0 +1,44 @@
+# Deutsche Nationalbibliothek {#sec-dnb}
+
+The DNB catalogue is queried through its SRU interface. The CPS catalogue item carries a *DNB edition ID* (P44) and the artist has a *GND ID* (P25).
+
+```{python}
+#| label: setup
+from baldessari import cps, dnb, plots, table
+```
+
+## The catalogue record
+
+```{python}
+#| label: tbl-dnb-record
+#| tbl-cap: "DNB record of the catalogue that is described in the CPS Wikibase."
+idns = cps.catalogues()["dnbId"].dropna().tolist()
+import pandas as pd
+record = pd.concat([dnb.by_idn(i) for i in idns], ignore_index=True)
+shown = record[["idn", "title", "subtitle", "place", "publisher", "year", "isbn"]]
+shown.columns = ["DNB ID", "Title", "Subtitle", "Place", "Publisher", "Year", "ISBN"]
+table(shown)
+```
+
+## Publications by and about John Baldessari
+
+```{python}
+#| label: dnb-search
+pubs = dnb.about_baldessari()
+```
+
+A search for the person heading *Baldessari, John* returns **`{python} len(pubs)`** records.
+
+```{python}
+#| label: fig-dnb-years
+#| fig-cap: "DNB records for John Baldessari by year of publication (five-year bins)."
+plots.per_year(pubs)
+```
+
+```{python}
+#| label: tbl-dnb-publications
+#| tbl-cap: "Most recent DNB records for John Baldessari."
+shown = pubs.sort_values("year", ascending=False).head(25)[["year", "title", "publisher", "isbn"]]
+shown.columns = ["Year", "Title", "Publisher", "ISBN"]
+table(shown)
+```

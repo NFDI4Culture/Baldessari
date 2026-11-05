@@ -1,0 +1,16 @@
+PREFIX cps: <https://cps.tibwiki.io/entity/>
+PREFIX cpsd: <https://cps.tibwiki.io/prop/direct/>
+PREFIX cpsp: <https://cps.tibwiki.io/prop/>
+PREFIX cpsq: <https://cps.tibwiki.io/prop/qualifier/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Works exhibited (P21) in an exhibition and the catalogue (P48) page they appear on (qualifier P49).
+SELECT ?exhibition ?exhibitionLabel ?item ?label ?catalogue ?page
+WHERE {
+  ?item cpsd:P21 ?exhibition .
+  OPTIONAL { ?exhibition rdfs:label ?exhibitionLabel . FILTER(LANG(?exhibitionLabel) = "en") }
+  OPTIONAL { ?item rdfs:label ?label . FILTER(LANG(?label) = "en") }
+  OPTIONAL { ?item cpsd:P48 ?catalogue }
+  OPTIONAL { ?item cpsp:P48 ?st . ?st cpsq:P49 ?page }
+}
+ORDER BY ?exhibition ?page ?label

@@ -1,0 +1,20 @@
+{
+  "hash": "8702cd93171f26f0d6f5551423c20cde",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "# Exhibitions and catalogue {#sec-exhibitions}\n\nThe CPS Wikibase records an exhibition (type Q3) and the catalogue (type Q205) that accompanied it. Works are linked to the exhibition with *Exhibited at* (P21) and to the catalogue with *Appears in catalogue* (P48). The catalogue statement can carry a *Scan page* qualifier (P49) that points to the page of a digitised copy.\n\n\n\n## Exhibition\n\n::: {#tbl-exhibitions .cell tbl-cap='Exhibitions in the CPS Wikibase.' execution_count=2}\n\n::: {.cell-output .cell-output-display .cell-output-markdown execution_count=2}\n| ID   | Exhibition                                                                               | Host                     | Start      | End        |   Works | Wikidata   |\n|:-----|:-----------------------------------------------------------------------------------------|:-------------------------|:-----------|:-----------|--------:|:-----------|\n| Q49  | while something is happening here, something else is happening there : works 1988 - 1999 | Sprengel Museum Hannover | 1999-09-26 | 2000-01-02 |      73 | Q141747732 |\n:::\n:::\n\n\n## Catalogue\n\n::: {#tbl-catalogue .cell tbl-cap='Catalogue records in the CPS Wikibase.' execution_count=3}\n\n::: {.cell-output .cell-output-display .cell-output-markdown execution_count=3}\n| ID   | Title      | Authors                                           | Publisher   |   Year | ISBN-13           |    DNB ID |\n|:-----|:-----------|:--------------------------------------------------|:------------|-------:|:------------------|----------:|\n| Q211 | Baldessari | Thomas Weski; Diedrich Diederichsen; Meg Cranston | König       |   1999 | 978-3-88375-396-6 | 957409494 |\n:::\n:::\n\n\n## Works and catalogue pages\n\n\n\n**73** works are linked to the exhibition. For **0** of them a scan page in the catalogue has been recorded so far.\n\n",
+    "supporting": [
+      "exhibitions_files\\figure-epub"
+    ],
+    "filters": [],
+    "engineDependencies": {
+      "jupyter": [
+        {
+          "jsWidgets": false,
+          "jupyterWidgets": false,
+          "htmlLibraries": []
+        }
+      ]
+    }
+  }
+}

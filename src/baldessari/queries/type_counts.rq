@@ -1,0 +1,12 @@
+PREFIX cpsd: <https://cps.tibwiki.io/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Number of items per type (P3). Items may carry several types.
+SELECT ?type ?typeLabel (COUNT(DISTINCT ?item) AS ?items)
+WHERE {
+  ?item cpsd:P3 ?type .
+  ?type rdfs:label ?typeLabel .
+  FILTER(LANG(?typeLabel) = "en")
+}
+GROUP BY ?type ?typeLabel
+ORDER BY DESC(?items)

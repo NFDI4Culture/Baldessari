@@ -1,0 +1,52 @@
+# Wikidata {#sec-wikidata}
+
+CPS items can be linked to Wikidata with the property *Wikidata item* (P24). This chapter lists those links and uses Wikidata to describe John Baldessari.
+
+```{python}
+#| label: setup
+from baldessari import cps, wikidata, table
+links = cps.wikidata_links()
+```
+
+## Links from the CPS Wikibase
+
+**`{python} len(links)`** CPS items point to Wikidata.
+
+```{python}
+#| label: tbl-wikidata-links
+#| tbl-cap: "CPS items linked to Wikidata."
+shown = links[["qid", "label", "types", "wikidata"]]
+shown.columns = ["CPS ID", "Label", "Types", "Wikidata"]
+table(shown)
+```
+
+## John Baldessari on Wikidata
+
+```{python}
+#| label: tbl-wikidata-profile
+#| tbl-cap: "Selected Wikidata statements about John Baldessari (Q683378)."
+profile = wikidata.artist_profile()
+rows = (
+    profile.assign(
+        value=lambda d: d["valueLabel"].where(
+            ~d["pid"].isin(["P569", "P570"]), d["valueLabel"].str[:10]
+        )
+    )
+    .groupby("propertyLabel", sort=False)["value"]
+    .agg("; ".join)
+    .reset_index()
+)
+rows.columns = ["Property", "Value"]
+table(rows)
+```
+
+## Entities referenced by the CPS data
+
+```{python}
+#| label: tbl-wikidata-entities
+#| tbl-cap: "Descriptions of Wikidata entities referenced from CPS."
+ents = wikidata.entities(links["wikidata"].dropna().unique().tolist())
+shown = ents[["qid", "label", "description"]]
+shown.columns = ["Wikidata", "Label", "Description"]
+table(shown)
+```

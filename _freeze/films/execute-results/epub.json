@@ -1,0 +1,20 @@
+{
+  "hash": "0107a0ba4953c82c21a31eb7b0121e76",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "# Films {#sec-films}\n\nThe CPS Wikibase distinguishes several film and video types, such as *Super-8 film loop*, *film loop*, *16 mm film* and *video loop*. This chapter groups them together.\n\n\n\nThe CPS Wikibase contains **26** works of a film or video type.\n\n::: {#tbl-films .cell tbl-cap='Films and video works in the CPS Wikibase.' execution_count=2}\n\n::: {.cell-output .cell-output-display .cell-output-markdown execution_count=2}\n| ID   | Title                                |   Year | Materials              | Size (cm)   |\n|:-----|:-------------------------------------|-------:|:-----------------------|:------------|\n| Q99  | Isocephaly                           |   1968 | color                  |             |\n| Q102 | What To Leave Out                    |   1968 | color                  |             |\n| Q111 | Black Curtain                        |   1970 | sound; black-and-white |             |\n| Q109 | Black Painting                       |   1970 | sound; black-and-white |             |\n| Q103 | Cremation                            |   1970 | sound; black-and-white |             |\n| Q107 | Folding Hat                          |   1970 | sound; black-and-white |             |\n| Q106 | Folding Hat: Version 1               |   1970 | sound; black-and-white |             |\n| Q112 | Life Drawing                         |   1970 | sound; black-and-white |             |\n| Q115 | Proust                               |   1970 | color; 16 mm           |             |\n| Q108 | Black-Out                            |   1971 | sound; black-and-white |             |\n| Q104 | New York City Art History            |   1971 | color                  |             |\n| Q110 | Easel Painting                       |   1972 | color                  |             |\n| Q122 | Inventory                            |   1972 | black-and-white        |             |\n| Q97  | Teaching A Plant The Alphabet        |   1972 | color; sound           |             |\n| Q105 | The Eye Does Not Naturally Pan       |   1972 | sound; black-and-white |             |\n| Q117 | The Hollywood Film                   |   1972 | color; sound           |             |\n| Q113 | Time-Temperature                     |   1972 | color                  |             |\n| Q114 | Walking Forward Running Past         |   1972 | color                  |             |\n| Q116 | Water To Wine To Water               |   1972 | color                  |             |\n| Q101 | How We Do Art Now                    |   1973 | sound; black-and-white |             |\n| Q119 | Throwing Leaves Back At Tree         |   1973 | color; sound           |             |\n| Q121 | Ice Cubes Sliding                    |   1974 | color                  |             |\n| Q100 | Taking A Slate: David                |   1974 | sound; black-and-white |             |\n| Q98  | Taking A Slate: Ilene And David (#2) |   1974 | sound; black-and-white |             |\n| Q120 | The Italian Tape                     |   1974 | color                  |             |\n| Q123 | Two Colorful Melodies                |   1977 | color; sound           |             |\n:::\n:::\n\n\n## Film types\n\n::: {#cell-fig-film-types .cell execution_count=3}\n\n::: {.cell-output .cell-output-display execution_count=3}\n![Number of film and video works per type.](films_files/figure-epub/fig-film-types-output-1.png){#fig-film-types}\n:::\n:::\n\n\n",
+    "supporting": [
+      "films_files\\figure-epub"
+    ],
+    "filters": [],
+    "engineDependencies": {
+      "jupyter": [
+        {
+          "jsWidgets": false,
+          "jupyterWidgets": false,
+          "htmlLibraries": []
+        }
+      ]
+    }
+  }
+}

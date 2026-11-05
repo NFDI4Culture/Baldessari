@@ -1,0 +1,17 @@
+# Summary {#sec-summary}
+
+```{python}
+#| label: setup
+from baldessari import cps
+counts = cps.type_counts().set_index("typeLabel")["items"]
+```
+
+The CPS Wikibase currently describes **`{python} int(counts.get("artwork", 0))`** artworks, including **`{python} int(counts.get("painting", 0))`** paintings and **`{python} int(counts.get("photograph", 0))`** photographs, together with the materials, persons, exhibition and catalogue that document them.
+
+Linking the CPS data to Wikidata and the DNB makes it possible to add context and bibliographic evidence without duplicating it in the Wikibase. Because the book is generated from live queries, it can be rebuilt at any time to follow the growth of the data.
+
+## Possible next steps
+
+- Fill the *Scan page* qualifier (P49) for all catalogue appearances.
+- Add Wikidata links (P24) for the remaining persons and materials.
+- Record images (P17) so that works can be shown in the book.

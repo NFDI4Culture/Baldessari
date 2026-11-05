@@ -1,0 +1,20 @@
+/*-- scss:defaults --*/
+$font-family-sans-serif: "Source Sans Pro", -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$link-color: #3366cc;
+
+/*-- scss:rules --*/
+table {
+  font-size: 0.85rem;
+}
+
+/* Wide data tables scroll horizontally on small screens */
+.table-responsive,
+.cell-output-display {
+  overflow-x: auto;
+}
+
+@media (max-width: 576px) {
+  table {
+    font-size: 0.75rem;
+  }
+}

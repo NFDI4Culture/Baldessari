@@ -1,0 +1,17 @@
+PREFIX cpsd: <https://cps.tibwiki.io/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# CPS items linked to Wikidata (P24), with their CPS types.
+SELECT ?item ?label ?wikidata ?types
+WHERE {
+  {
+    SELECT ?item ?wikidata (SAMPLE(?l) AS ?label) (GROUP_CONCAT(DISTINCT ?tl; separator = "; ") AS ?types)
+    WHERE {
+      ?item cpsd:P24 ?wikidata .
+      OPTIONAL { ?item rdfs:label ?l . FILTER(LANG(?l) = "en") }
+      OPTIONAL { ?item cpsd:P3 ?t . ?t rdfs:label ?tl . FILTER(LANG(?tl) = "en") }
+    }
+    GROUP BY ?item ?wikidata
+  }
+}
+ORDER BY ?label

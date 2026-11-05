@@ -1,0 +1,44 @@
+# Exhibitions and catalogue {#sec-exhibitions}
+
+The CPS Wikibase records an exhibition (type Q3) and the catalogue (type Q205) that accompanied it. Works are linked to the exhibition with *Exhibited at* (P21) and to the catalogue with *Appears in catalogue* (P48). The catalogue statement can carry a *Scan page* qualifier (P49) that points to the page of a digitised copy.
+
+```{python}
+#| label: setup
+from baldessari import cps, table
+exh = cps.exhibitions()
+cat = cps.catalogues()
+works = cps.exhibited_works()
+```
+
+## Exhibition
+
+```{python}
+#| label: tbl-exhibitions
+#| tbl-cap: "Exhibitions in the CPS Wikibase."
+shown = exh[["qid", "label", "host", "start", "end", "works", "wikidata"]].copy()
+shown["start"] = shown["start"].str[:10]
+shown["end"] = shown["end"].str[:10]
+shown.columns = ["ID", "Exhibition", "Host", "Start", "End", "Works", "Wikidata"]
+table(shown)
+```
+
+## Catalogue
+
+```{python}
+#| label: tbl-catalogue
+#| tbl-cap: "Catalogue records in the CPS Wikibase."
+shown = cat[["qid", "title", "authors", "publisher", "published", "isbn", "dnbId"]].copy()
+shown["published"] = shown["published"].str[:4]
+shown.columns = ["ID", "Title", "Authors", "Publisher", "Year", "ISBN-13", "DNB ID"]
+table(shown)
+```
+
+## Works and catalogue pages
+
+```{python}
+#| label: scan-coverage
+n_total = len(works)
+n_pages = int(works["page"].notna().sum())
+```
+
+**`{python} n_total`** works are linked to the exhibition. For **`{python} n_pages`** of them a scan page in the catalogue has been recorded so far.
