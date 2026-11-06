@@ -5,7 +5,7 @@ title: "Preface"
 This book presents the work of the artist John Baldessari (1931--2020) as it is described in a linked-data knowledge graph. Every table and figure is generated from live data when the book is built:
 
 - **OCR catalogue extraction**, which provides structured data extracted from the exhibition catalogue,
-- the **CPS Wikibase** at <https://cps.tibwiki.io/>, which records artworks, materials, persons, an exhibition and its catalogue,
+- the **CPS Wikibase** at <https://cps.tibwiki.io/>, which records artworks, materials, persons, exhibitions and their catalogue,
 - **Wikidata**, which supplies context and shared identifiers, and
 - the **Deutsche Nationalbibliothek (DNB)**, which supplies bibliographic records.
 

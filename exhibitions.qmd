@@ -1,6 +1,6 @@
 # Exhibitions and catalogue {#sec-exhibitions}
 
-The CPS Wikibase records an exhibition (type Q3) and the catalogue (type Q205) that accompanied it. Works are linked to the exhibition with *Exhibited at* (P21) and to the catalogue with *Appears in catalogue* (P48). The catalogue statement can carry a *Scan page* qualifier (P49) that points to the page of a digitised copy.
+The CPS Wikibase records exhibitions (type Q3) and the catalogue (type Q205) that documents them. Works are linked to exhibitions with *Exhibited at* (P21) and to the catalogue with *Appears in catalogue* (P48). The catalogue statement can carry a *Scan page* qualifier (P49) that points to the page of a digitised copy.
 
 ```{python}
 #| label: setup
@@ -45,4 +45,4 @@ n_total = len(works)
 n_pages = int(works["page"].notna().sum())
 ```
 
-**`{python} n_total`** works are linked to the exhibition. For **`{python} n_pages`** of them a scan page in the catalogue has been recorded so far.
+**`{python} n_total`** work-to-exhibition links are recorded. For **`{python} n_pages`** of them a scan page in the catalogue has been recorded so far.
