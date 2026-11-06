@@ -1,0 +1,257 @@
+# Public catalogue {#sec-exhibition-catalogue}
+
+This part of the book presents the exhibition itself: where and when it was shown, the artist, the catalogue that accompanied it, and the works, with a mark for each work that was on view.
+
+```{python}
+#| label: setup
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path.cwd() / "src"))
+
+import zipfile
+import pandas as pd
+from baldessari import cps, wikidata, table
+
+WIKIDATA = "https://www.wikidata.org/wiki/"
+
+
+def day(value) -> str:
+    ts = pd.to_datetime(str(value)[:10])
+    return f"{ts.day} {ts:%B %Y}"
+
+
+def venue_name(host: str) -> str:
+    return host.split(",")[0].split()[-1]
+
+
+exh = cps.exhibitions().sort_values("start").reset_index(drop=True)
+cat = cps.catalogues().iloc[0]
+on_view = cps.exhibited_works()
+works = cps.artworks()
+profile = wikidata.artist_profile()
+```
+
+## Exhibition
+
+```{python}
+#| label: exhibition-info
+#| output: asis
+title = exh["label"].iloc[0]
+print(f"*{title}*\n")
+
+rows = pd.DataFrame(
+    {
+        "Venue": exh["host"],
+        "Dates": [f"{day(s)} – {day(e)}" for s, e in zip(exh["start"], exh["end"])],
+        "Works on view": exh["works"],
+        "Wikidata": [
+            f"[View on Wikidata]({WIKIDATA}{q})" if isinstance(q, str) and q else "Not yet on Wikidata"
+            for q in exh["wikidata"]
+        ],
+    }
+)
+print(table(rows).data)
+
+linked = exh[exh["wikidata"].notna() & (exh["wikidata"] != "")]
+if len(linked):
+    items = "\n".join(
+        f"- [{h}]({WIKIDATA}{q})" for h, q in zip(linked["host"], linked["wikidata"])
+    )
+    print(
+        '\n::: {.callout-tip title="Find the exhibition on Wikidata"}\n'
+        "The exhibition is also described in Wikidata, the free knowledge base. "
+        "Follow the link to see its open, reusable record:\n\n"
+        f"{items}\n:::\n"
+    )
+```
+
+## Artist
+
+```{python}
+#| label: artist-info
+#| output: asis
+def values(pid: str) -> list[str]:
+    return profile.loc[profile["pid"] == pid, "valueLabel"].tolist()
+
+
+def first(pid: str) -> str:
+    v = values(pid)
+    return v[0] if v else ""
+
+
+born = ", ".join(x for x in (day(first("P569")) if first("P569") else "", first("P19")) if x)
+died = ", ".join(x for x in (day(first("P570")) if first("P570") else "", first("P20")) if x)
+occupations = ", ".join(values("P106"))
+education = "; ".join(values("P69"))
+awards = "; ".join(values("P166"))
+
+lines = [
+    f"**John Baldessari**  ([Wikidata]({WIKIDATA}{wikidata.BALDESSARI}))\n",
+    f"- **Born:** {born}",
+    f"- **Died:** {died}",
+    f"- **Nationality:** {first('P27')}",
+    f"- **Works as:** {occupations}",
+    f"- **Studied at:** {education}",
+    f"- **Awards:** {awards}",
+]
+print("\n".join(line for line in lines if not line.endswith(":** ")))
+```
+
+## Book catalogue
+
+```{python}
+#| label: catalogue-info
+#| output: asis
+fields = [
+    ("Title", cat["title"]),
+    ("Subtitle", cat.get("subtitle")),
+    ("Authors", cat.get("authors")),
+    ("Publisher", cat.get("publisher")),
+    ("Year", str(cat.get("published") or "")[:4]),
+    ("ISBN", cat.get("isbn")),
+]
+print("\n".join(f"- **{k}:** {v}" for k, v in fields if isinstance(v, str) and v.strip()))
+```
+
+## Artworks
+
+```{python}
+#| label: artwork-list
+#| output: asis
+short = dict(zip(exh["qid"], exh["host"].map(venue_name)))
+on_view = on_view.assign(
+    exhibition_qid=on_view["exhibition"].str.rsplit("/", n=1).str[-1]
+)
+venues = (
+    on_view.groupby("qid")["exhibition_qid"]
+    .agg(lambda s: [short[q] for q in exh["qid"] if q in set(s)])
+    .to_dict()
+)
+
+
+def exhibited(qid: str) -> str:
+    seen = venues.get(qid, [])
+    if not seen:
+        return "–"
+    if len(seen) == len(exh):
+        return "✓ Both venues" if len(seen) == 2 else "✓ All venues"
+    return "✓ " + ", ".join(seen)
+
+
+def num(v) -> str:
+    return "" if pd.isna(v) else f"{v:g}"
+
+
+def size(row) -> str:
+    parts = [num(row["height"]), num(row["width"]), num(row["depth"])]
+    return " × ".join(p for p in parts if p)
+
+
+def medium(row) -> str:
+    stated = row["materialsStated"]
+    if isinstance(stated, str) and stated.strip():
+        return stated
+    return row["materials"] or ""
+
+
+works = works.assign(_year=works["year"].astype("Int64")).sort_values(
+    ["_year", "label"], na_position="last"
+)
+listing = pd.DataFrame(
+    {
+        "Title": works["label"],
+        "Year": works["_year"].astype("string").fillna(""),
+        "Medium": works.apply(medium, axis=1),
+        "Size (cm)": works.apply(size, axis=1),
+        "Exhibited": works["qid"].map(exhibited),
+    }
+)
+n_works = len(listing)
+n_shown = int((listing["Exhibited"] != "–").sum())
+print(
+    f"The catalogue documents **{n_works} works**. "
+    f"**{n_shown}** of them were on view in the exhibition (marked ✓); "
+    f"the other {n_works - n_shown} are reproduced in the catalogue only.\n"
+)
+print('::: {.content-visible when-format="html"}\n*Click a column heading to sort the table.*\n:::\n')
+print("::: {.sortable-table}\n" + table(listing).data + "\n:::")
+```
+
+```{=html}
+<style>
+  .sortable-table th { cursor: pointer; user-select: none; white-space: nowrap; }
+  .sortable-table th::after { content: " \2195"; opacity: .35; }
+  .sortable-table th[aria-sort="ascending"]::after { content: " \25B2"; opacity: 1; }
+  .sortable-table th[aria-sort="descending"]::after { content: " \25BC"; opacity: 1; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".sortable-table table").forEach(function (table) {
+    var body = table.tBodies[0];
+    var heads = table.querySelectorAll("thead th");
+    heads.forEach(function (th, col) {
+      th.tabIndex = 0;
+      var sort = function () {
+        var dir = th.getAttribute("aria-sort") === "ascending" ? "descending" : "ascending";
+        heads.forEach(function (h) { h.removeAttribute("aria-sort"); });
+        th.setAttribute("aria-sort", dir);
+        var sign = dir === "ascending" ? 1 : -1;
+        var value = function (row) {
+          var t = row.cells[col].textContent.trim();
+          return t === "\u2013" ? "" : t;
+        };
+        Array.from(body.rows).sort(function (a, b) {
+          var x = value(a), y = value(b);
+          if (x === "" && y === "") return 0;
+          if (x === "") return 1;
+          if (y === "") return -1;
+          return sign * x.localeCompare(y, undefined, { numeric: true, sensitivity: "base" });
+        }).forEach(function (row) { body.appendChild(row); });
+      };
+      th.addEventListener("click", sort);
+      th.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); sort(); }
+      });
+    });
+  });
+});
+</script>
+```
+
+## Download the exhibition data
+
+```{python}
+#| label: download-data
+out = Path("downloads")
+out.mkdir(exist_ok=True)
+archive = out / "baldessari-exhibition-data.zip"
+
+exhibitions_csv = pd.DataFrame(
+    {
+        "Exhibition": exh["label"],
+        "Venue": exh["host"],
+        "Start": exh["start"].str[:10],
+        "End": exh["end"].str[:10],
+        "Works on view": exh["works"],
+        "Wikidata": [f"{WIKIDATA}{q}" if isinstance(q, str) and q else "" for q in exh["wikidata"]],
+    }
+)
+catalogue_csv = cat.drop(labels=["qid", "dnbId", "url"], errors="ignore").to_frame().T
+artworks_csv = listing.assign(
+    **{"Artist": works["creator"].values, "Exhibited at": works["qid"].map(lambda q: "; ".join(venues.get(q, []))).values}
+)
+
+with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as z:
+    for name, df in {
+        "exhibitions.csv": exhibitions_csv,
+        "catalogue.csv": catalogue_csv,
+        "artworks.csv": artworks_csv,
+    }.items():
+        z.writestr(name, df.to_csv(index=False))
+```
+
+All the data shown on this page (exhibitions, catalogue and artworks) is available as a single download:
+
+**[Download the exhibition data (ZIP of CSV files)](downloads/baldessari-exhibition-data.zip)**
+
+The files open in Excel, Numbers or any spreadsheet. For the complete linked data behind the whole book, see [Data Downloads](book-as-data.qmd).

@@ -1,6 +1,8 @@
 project:
   type: book
   output-dir: _book
+  resources:
+    - downloads/*.zip
 
 execute:
   freeze: auto
@@ -22,6 +24,9 @@ book:
   chapters:
     - index.qmd
     - introduction.qmd
+    - part: "Exhibition"
+      chapters:
+        - exhibition-catalogue.qmd
     - part: "The CPS catalogue"
       chapters:
         - artworks.ipynb
