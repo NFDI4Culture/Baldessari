@@ -4,7 +4,12 @@ The DNB catalogue is queried through its SRU interface. The CPS catalogue item c
 
 ```{python}
 #| label: setup
+import pandas as pd
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path.cwd() / "src"))
 from baldessari import cps, dnb, plots, table
+
 ```
 
 ## The catalogue record

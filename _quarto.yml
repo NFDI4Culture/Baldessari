@@ -9,9 +9,9 @@ execute:
   warning: false
 
 book:
-  title: "John Baldessari in Linked Open Data"
-  subtitle: "A data-driven book from the CPS Wikibase, Wikidata and the DNB"
-  author: "NFDI4Culture"
+  title: "John Baldessari - A Linked Open Exhibition Guide"
+  subtitle: "A data-driven book sourced from OCR, CPS Wikibase, Wikidata, and the DNB"
+  author: "CPS"
   date: today
   output-file: "Baldessari"
   site-url: https://nfdi4culture.github.io/Baldessari/
@@ -19,7 +19,6 @@ book:
   repo-actions: [edit, issue]
   search: true
   downloads: [pdf, docx, epub]
-  sharing: [twitter, linkedin]
   chapters:
     - index.qmd
     - introduction.qmd
@@ -36,6 +35,12 @@ book:
       chapters:
         - wikidata.qmd
         - dnb.qmd
+    - part: "Catalogue OCR"
+      chapters:
+        - ocr.qmd
+    - part: "Book as data"
+      chapters:
+        - book-as-data.qmd
     - summary.qmd
     - references.qmd
   appendices:

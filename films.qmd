@@ -4,6 +4,10 @@ The CPS Wikibase distinguishes several film and video types, such as *Super-8 fi
 
 ```{python}
 #| label: setup
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path.cwd() / "src"))
+
 from baldessari import cps, plots, table, works_table
 films = cps.films()
 ```

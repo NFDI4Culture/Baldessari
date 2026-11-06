@@ -1,0 +1,52 @@
+# Data Downloads
+
+This chapter presents the data portability layer used to make the exhibition data reusable outside Wikibase. The model is based on the ER model and pipeline documented in the linked-open-exhibition portability work.
+
+Source page:
+
+- [Entity-relationship model (er-model.qmd)](https://github.com/NFDI4Culture/linked-open-exhibition/blob/main/data-models/portability/er-model.qmd)
+
+## What is included
+
+The data model combines:
+
+- a conceptual ER model of entities and relationships
+- a SQLite Entity-Attribute-Value (EAV) representation for querying and validation
+- an XML export validated against a DTD
+- a Turtle RDF export from the CPS Wikibase
+
+Together, these files provide a portable representation of the dataset that can be inspected, queried, and reused in other workflows.
+
+## Download the full dataset used for this book
+
+The following files contain the full data used to build this book:
+
+- [SQLite database (linked-open-exhibition.sqlite)](https://github.com/NFDI4Culture/linked-open-exhibition/blob/main/data-models/portability/linked-open-exhibition.sqlite?raw=1)
+- [XML export (linked-open-exhibition.xml)](https://github.com/NFDI4Culture/linked-open-exhibition/blob/main/data-models/portability/linked-open-exhibition.xml?raw=1)
+- [Turtle RDF export (cps.ttl)](https://github.com/NFDI4Culture/linked-open-exhibition/blob/main/data-models/portability/cps.ttl?raw=1)
+
+If you want to regenerate the Turtle file directly from Wikibase, use:
+
+- [RDF export script (dump_cps_rdf.py)](https://github.com/NFDI4Culture/linked-open-exhibition/blob/main/data-models/portability/dump_cps_rdf.py)
+- [Portability folder](https://github.com/NFDI4Culture/linked-open-exhibition/tree/main/data-models/portability)
+
+The XML file can be opened and explored with XML Notepad.
+
+- XML Notepad download: [https://github.com/microsoft/XmlNotepad/releases](https://github.com/microsoft/XmlNotepad/releases)
+
+## Why this matters
+
+Publishing the same content in both SQLite and XML supports different audiences and tools:
+
+- SQLite is practical for data analysis and reproducible queries.
+- XML is practical for archival exchange and structured inspection.
+
+This portability layer helps ensure that the exhibition knowledge in this book remains transparent, verifiable, and reusable.
+
+## Explore the live Wikibase data
+
+You can also explore the live CPS Wikibase data directly:
+
+- [CPS Wikibase](https://cps.tibwiki.io/)
+- [SPARQL endpoint](https://cps.tibwiki.io/query/proxy/sparql)
+- [EntityData export (RDF formats)](https://cps.tibwiki.io/wiki/Special:EntityData)

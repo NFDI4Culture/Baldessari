@@ -4,6 +4,7 @@
 
 | Source | Access | Used for |
 |--------|--------|----------|
+| OCR catalogue extraction | Notebook and CSV outputs from the linked-open-exhibition pipeline | Structured artwork metadata extracted from scanned catalogue pages |
 | CPS Wikibase | SPARQL, `https://cps.tibwiki.io/query/proxy/sparql` | Works, materials, persons, exhibition, catalogue |
 | Wikidata | SPARQL, `https://query.wikidata.org/sparql` | Context about the artist and linked entities |
 | DNB | SRU, `https://services.dnb.de/sru/dnb` (MARC21-xml) | Publications by and about the artist |
@@ -16,6 +17,10 @@ Each CPS item has one or more *types* (property P3). An item can carry several t
 
 ```{python}
 #| label: setup
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path.cwd() / "src"))
+
 from baldessari import cps, plots, table
 ```
 
@@ -37,4 +42,4 @@ plots.bar_counts(cps.type_counts(), "typeLabel", "items")
 
 ## Catalogue used as a source
 
-Much of the data was derived from the exhibition catalogue @baldessari1999. It is itself an item in the CPS Wikibase and is linked to the DNB (see [Chapter -@sec-dnb]).
+Much of the data was derived from the exhibition catalogue @baldessari1999 through OCR-assisted extraction and curation. The catalogue is itself an item in the CPS Wikibase and is linked to the DNB (see [Chapter -@sec-dnb]).

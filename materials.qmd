@@ -4,6 +4,10 @@ Materials are items of type *material* (Q5). Works link to them with the propert
 
 ```{python}
 #| label: setup
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path.cwd() / "src"))
+
 from baldessari import cps, plots, table
 materials = cps.materials()
 ```

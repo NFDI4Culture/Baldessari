@@ -4,6 +4,10 @@ Persons are items of type *person* (Q2). They are creators (P6) of works or auth
 
 ```{python}
 #| label: setup
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path.cwd() / "src"))
+
 from baldessari import cps, table
 persons = cps.persons()
 ```

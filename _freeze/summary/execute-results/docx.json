@@ -1,8 +1,8 @@
 {
-  "hash": "5b178ea7f1a9c46c1cb2fe06a8b9026d",
+  "hash": "0125f8a7bcd1e397a5405216ede6edc1",
   "result": {
     "engine": "jupyter",
-    "markdown": "# Summary {#sec-summary}\n\n\n\nThe CPS Wikibase currently describes **73** artworks, including **21** paintings and **19** photographs, together with the materials, persons, exhibition and catalogue that document them.\n\nLinking the CPS data to Wikidata and the DNB makes it possible to add context and bibliographic evidence without duplicating it in the Wikibase. Because the book is generated from live queries, it can be rebuilt at any time to follow the growth of the data.\n\n## Possible next steps\n\n- Fill the *Scan page* qualifier (P49) for all catalogue appearances.\n- Add Wikidata links (P24) for the remaining persons and materials.\n- Record images (P17) so that works can be shown in the book.\n\n",
+    "markdown": "# Summary {#sec-summary}\n\n\n\nThe CPS Wikibase currently describes **73** artworks, including **21** paintings and **19** photographs, together with the materials, persons, exhibition and catalogue that document them.\n\nCombining OCR-derived catalogue extraction with CPS data linked to Wikidata and the DNB makes it possible to add context and bibliographic evidence without duplicating it in the Wikibase. Because the book is generated from live queries and reproducible source files, it can be rebuilt at any time to follow the growth of the data.\n\n## Possible next steps\n\n- Fill the *Scan page* qualifier (P49) for all catalogue appearances.\n- Add Wikidata links (P24) for the remaining persons and materials.\n- Record images (P17) so that works can be shown in the book.\n\n",
     "supporting": [
       "summary_files\\figure-docx"
     ],

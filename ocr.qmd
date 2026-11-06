@@ -1,0 +1,27 @@
+# Data Extraction
+
+This section documents the OCR + LLM workflow used to extract structured artwork data from scanned exhibition catalogues. It is included here as project context for the Baldessari book and for future reuse with additional catalogues.
+
+## Source Material
+
+The extraction workflow and its implementation are documented in the linked-open-exhibition repository:
+
+- Notebook: [catalogue-ocr-llm-extraction.ipynb](https://github.com/NFDI4Culture/linked-open-exhibition/blob/main/catalogues/catalogue-extraction/catalogue-ocr-llm-extraction.ipynb)
+- Method notes: [README.md](https://github.com/NFDI4Culture/linked-open-exhibition/blob/main/catalogues/catalogue-extraction/README.md)
+- Example output data: [baldessari-sprengel-artworks.csv](https://github.com/NFDI4Culture/linked-open-exhibition/blob/main/catalogues/catalogue-extraction/demo/baldessari-sprengel-artworks.csv)
+
+## What the Workflow Produces
+
+For a catalogue PDF, the workflow produces a structured CSV of extracted artworks and related metadata. It combines:
+
+- OCR on scanned pages
+- LLM-assisted segmentation and field extraction
+- quality checks and review markers for uncertain rows
+
+The output can be used as a curated input for downstream integration into cultural heritage knowledge graphs and catalogue pipelines.
+
+## Notes for This Book
+
+- This chapter is intentionally focused on method documentation and provenance.
+- Additional OCR-derived pages can be added to this part of the book later.
+- The implementation details remain maintained in the linked-open-exhibition repository referenced above.

@@ -5,12 +5,17 @@
 | CPS Wikibase | <https://cps.tibwiki.io/query/proxy/sparql> | See the licence statement on the [CPS wiki](https://cps.tibwiki.io/) |
 | Wikidata | <https://query.wikidata.org/sparql> | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | Deutsche Nationalbibliothek | <https://services.dnb.de/sru/dnb> | DNB bibliographic data are available under CC0 1.0 (see the DNB data-licence page) |
+| OCR catalogue extraction | [Notebook](https://github.com/NFDI4Culture/linked-open-exhibition/blob/main/catalogues/catalogue-extraction/catalogue-ocr-llm-extraction.ipynb), [Method notes](https://github.com/NFDI4Culture/linked-open-exhibition/blob/main/catalogues/catalogue-extraction/README.md), [Output CSV](https://github.com/NFDI4Culture/linked-open-exhibition/blob/main/catalogues/catalogue-extraction/demo/baldessari-sprengel-artworks.csv) | Source repository terms apply (see linked-open-exhibition) |
 
 The text of this book is licensed under CC BY 4.0 and the code under the MIT licence.
 
 ```{python}
 #| label: build-info
 from datetime import datetime, timezone
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path.cwd() / "src"))
+
 from baldessari import cps, wikidata, dnb
 print(f"Built: {datetime.now(timezone.utc):%Y-%m-%d %H:%M} UTC")
 print(f"CPS endpoint: {cps.ENDPOINT}")
