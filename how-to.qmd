@@ -1,0 +1,185 @@
+# Publishing exhibition records {#sec-how-to}
+
+This how-to shows, in three steps, how to turn an exhibition into a public record that anyone can query: connect the artworks to the exhibition, fill in the data fields, and upload the result to Wikidata via CPS. John Baldessari's exhibition *While something is happening here, something else is happening there* is used as the running example.
+
+1. **Concept:** connect each artwork to the exhibition it was part of.
+2. **Data:** fill in the fields for the artwork, the exhibition, the catalogue and the artist.
+3. **Upload:** publish the data on Wikidata and link it back to the CPS Wikibase.
+
+## Step 1: The concept of a public record {#sec-howto-concept}
+
+A public record of an exhibition answers one question in a way that people and machines can both read: *which artworks were shown, where and when, and where is it documented?*
+
+The core of the record is a single connection between an **artwork** and an **exhibition**. In the CIDOC Conceptual Reference Model this connection is the property **P9i *forms part of***: the artwork's presentation is a part of the exhibition, which is made up of many such parts (the inverse property, P9, reads *consists of*). In the CPS Wikibase the connection is stored on the artwork as the property **Exhibited at** (P21), which is mapped to CIDOC P9i and to Wikidata **P608 *exhibition history***.
+
+Three further connections complete the record. The exhibition points to its **catalogue**, the catalogue documents the exhibition and the artworks (CIDOC **P70i *is documented in***), and the **artist** is recorded as the creator of each artwork.
+
+```{python}
+#| label: fig-howto-p9i
+#| fig-cap: "The exhibition record. Each artwork is connected to the exhibition with CIDOC P9i *forms part of* (highlighted); the catalogue documents both."
+#| fig-alt: "Diagram with four boxes. The artist is connected to the artwork as creator. The artwork is connected to the exhibition with P9i forms part of. The exhibition and the artwork are both connected to the catalogue with P70i is documented in."
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
+
+COBALT = "#0047AB"
+GREY = "#555555"
+
+fig, ax = plt.subplots(figsize=(9, 5))
+ax.set_xlim(0, 12)
+ax.set_ylim(0.5, 7)
+ax.axis("off")
+
+
+def box(cx, cy, title, sub, w=2.6, h=1.5, strong=False):
+    ax.add_patch(
+        FancyBboxPatch(
+            (cx - w / 2, cy - h / 2),
+            w,
+            h,
+            boxstyle="round,pad=0.05,rounding_size=0.15",
+            fc="#E6EEFA" if strong else "#F5F5F5",
+            ec=COBALT,
+            lw=1.8,
+        )
+    )
+    ax.text(cx, cy + 0.3, title, ha="center", va="center", fontsize=12, fontweight="bold", color="#1A1A1A")
+    ax.text(cx, cy - 0.25, sub, ha="center", va="center", fontsize=8.5, color="#444444", linespacing=1.3)
+
+
+def arrow(start, end, color=GREY, lw=1.6, rad=0.0):
+    ax.annotate(
+        "",
+        xy=end,
+        xytext=start,
+        arrowprops=dict(arrowstyle="-|>", color=color, lw=lw, connectionstyle=f"arc3,rad={rad}", mutation_scale=16),
+    )
+
+
+box(1.7, 6.0, "Artist", "John Baldessari")
+box(1.7, 3.2, "Artwork", "Man Running/\nMen Carrying Box", strong=True)
+box(6.0, 3.2, "Exhibition", "While something is\nhappening here ... (1999)", strong=True)
+box(10.3, 3.2, "Catalogue", "Exhibition catalogue\n(1999)")
+
+# Artist -> Artwork
+arrow((1.7, 5.2), (1.7, 4.0))
+ax.text(1.85, 4.6, "creator", fontsize=8.5, color=GREY, va="center")
+
+# Artwork -> Exhibition: P9i (the key connection)
+arrow((3.05, 3.2), (4.6, 3.2), color=COBALT, lw=3.0)
+ax.text(3.82, 3.45, "P9i", fontsize=12, fontweight="bold", color=COBALT, ha="center", va="bottom")
+ax.text(3.82, 2.95, "forms part of", fontsize=8.5, color=COBALT, ha="center", va="top")
+
+# Exhibition -> Catalogue
+arrow((7.35, 3.2), (8.9, 3.2))
+ax.text(8.12, 3.45, "P70i", fontsize=10, fontweight="bold", color=GREY, ha="center", va="bottom")
+ax.text(8.12, 2.95, "is documented in", fontsize=8.5, color=GREY, ha="center", va="top")
+
+# Artwork -> Catalogue (curved, below)
+arrow((1.7, 2.4), (10.3, 2.4), rad=0.22)
+ax.text(6.0, 0.95, "P70i is documented in  (with page)", fontsize=8.5, color=GREY, ha="center")
+
+plt.tight_layout()
+plt.show()
+```
+
+::: {.callout-note title="In CPS and in Wikidata"}
+The same connection has a different name in each system. CIDOC CRM: **P9i** *forms part of*. CPS Wikibase: **P21** *Exhibited at*. Wikidata: **P608** *exhibition history*. The CPS Wikibase stores the mapping, so data entered once can be published in the others.
+:::
+
+## Step 2: Fill in the data fields {#sec-howto-fields}
+
+Only a small set of fields is needed to make a usable public record. Fill them in for the four kinds of record: artist, exhibition, catalogue and artwork. The type of each record (*instance of*) is given by the kind of record, so you do not enter it.
+
+::: {.callout-tip title="Spreadsheet template"}
+All fields below are ready to fill in as a spreadsheet with one sheet per kind of record, example rows, and drop-down lists that keep the records connected.
+
+**[Download the exhibition record template (Excel)](downloads/baldessari-exhibition-template.xlsx)**
+:::
+
+### Artist
+
+The artist usually exists already. Search first, then reuse the existing record instead of creating a new one.
+
+| Field | What to enter | Example | CPS | Wikidata |
+|---|---|---|---|---|
+| Name | Name as commonly written | John Baldessari | label | label |
+| Wikidata ID | Optional. Existing Wikidata item | Q683378 | P24 | |
+
+: Fields for an artist {.striped}
+
+### Exhibition
+
+| Field | What to enter | Example | CPS | Wikidata |
+|---|---|---|---|---|
+| Title | Title of the exhibition | BALDESSARI : While something is happening here ... : Works 1988–1999 | P5 | P1476 |
+| Start date | First day, as YYYY-MM-DD | 1999-09-26 | P27 | P580 |
+| End date | Last day, as YYYY-MM-DD | 2000-01-02 | P28 | P582 |
+| Location | Venue where it was shown | Sprengel Museum Hannover | P16 | P276 |
+| Catalogue | The catalogue that documents it | the 1999 catalogue | P47 | P1343 |
+
+: Fields for an exhibition {.striped}
+
+A touring exhibition gets one row for each venue, so that each artwork can be linked to the show where it was actually seen.
+
+### Catalogue
+
+| Field | What to enter | Example | CPS | Wikidata |
+|---|---|---|---|---|
+| Title | Title of the catalogue | BALDESSARI : While something is happening here ... | P5 | P1476 |
+| ISBN or identifier | ISBN-13, or another identifier if there is none | 978-3-88375-396-6 | P43 | P212 |
+
+: Fields for a catalogue {.striped}
+
+### Artwork
+
+Create one row for every artwork in the catalogue, including those that were not exhibited.
+
+| Field | What to enter | Example | CPS | Wikidata |
+|---|---|---|---|---|
+| Title | Title of the work | Man Running/Men Carrying Box | P5 | P1476 |
+| Artwork type | What kind of object it is | photograph | P4 | P31 |
+| Materials | Materials and techniques | black and white photographs, vinyl paint, oil tint | P9 | P186 |
+| Artist | The artist | John Baldessari | P6 | P170 |
+| Date created | Year, or YYYY-MM-DD | 1988 | P7 | P571 |
+| Width cm | Width in centimetres | 268 | P12 | P2049 |
+| Height cm | Height in centimetres | 123 | P11 | P2048 |
+| **Exhibition** | **The exhibition, not the venue (Step 1)** | **[BALDESSARI : While something is happening here ... : Works 1988–1999](https://cps.tibwiki.io/wiki/Item:Q49)** | **P21** (CIDOC P9i) | **P608** |
+| Catalogue | The catalogue the work appears in | the 1999 catalogue | P48 | P1343 |
+
+: Fields for an artwork {.striped}
+
+## Step 3: Upload the data to Wikidata {#sec-howto-wikidata}
+
+Wikidata is open and anyone may add to it, so a few habits keep the record reliable. Data on Wikidata is released under CC0, so enter facts only, and do not upload images or texts that are protected by copyright.
+
+**1. Check what already exists.** Search [wikidata.org](https://www.wikidata.org) for the artist, the exhibition, the catalogue and each artwork. Reuse existing items to avoid duplicates. John Baldessari is [Q683378](https://www.wikidata.org/wiki/Q683378), and the exhibition has an item as well: [Q141747732](https://www.wikidata.org/wiki/Q141747732).
+
+**2. Create the missing items.** Use your filled-in template as the source. Work in the order of its sheets, because later items refer to earlier ones: artist, exhibition, catalogue, artworks. Give each item a label, a short description, a type (*instance of*) and the fields from Step 2. Add a reference, for example the catalogue or the museum website, to each statement that you did not observe yourself.
+
+**3. Add the connection from Step 1.** On each artwork that was exhibited, add the statement *exhibition history* (P608) with the exhibition item as value. For the catalogue, add *described by source* (P1343) with the page (P304) as a qualifier.
+
+**4. Upload in bulk with QuickStatements.** For more than a few artworks, use [QuickStatements](https://quickstatements.toolforge.org) instead of editing by hand. The following template creates one artwork item and connects it to the exhibition. Replace the values in angle brackets with your own data.
+
+```text
+CREATE
+LAST|Len|"Man Running/Men Carrying Box"
+LAST|Den|"1988 artwork by John Baldessari"
+LAST|P31|<class of the work, for example photograph>
+LAST|P170|Q683378
+LAST|P571|+1988-00-00T00:00:00Z/9
+LAST|P608|Q141747732
+```
+
+To change items that already exist, use the item number in place of `CREATE` and `LAST`, for example `Q123456|P608|Q141747732`.
+
+**5. Link back to the CPS Wikibase.** Copy each new Wikidata number into the *Wikidata item* field (P24) of the matching CPS record. This closes the loop: the exhibition page of this book then shows a "View on Wikidata" link for it. At the moment the Hannover exhibition is linked, and the Dresden exhibition is not yet.
+
+**6. Check the result.** Open the [Wikidata Query Service](https://query.wikidata.org) and run the query below. It lists every artwork on Wikidata that is connected to the exhibition. Compare the list with the artworks marked as exhibited in the exhibition catalogue chapter.
+
+```sparql
+SELECT ?artwork ?artworkLabel WHERE {
+  ?artwork wdt:P608 wd:Q141747732 .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+ORDER BY ?artworkLabel
+```

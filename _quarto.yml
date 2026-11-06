@@ -3,6 +3,7 @@ project:
   output-dir: _book
   resources:
     - downloads/*.zip
+    - downloads/*.xlsx
 
 execute:
   freeze: auto
@@ -46,6 +47,9 @@ book:
     - part: "Book as data"
       chapters:
         - book-as-data.qmd
+    - part: "A How-to"
+      chapters:
+        - how-to.qmd
     - summary.qmd
     - references.qmd
   appendices:
