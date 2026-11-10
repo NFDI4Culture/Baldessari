@@ -39,4 +39,4 @@ The project combines several licensing arrangements.
 
 A project made with the students of the Bachelor of Arts [Information Management (BIM)](https://f3.hs-hannover.de/en/courses/bachelor-studiengaenge/information-management-bim) of Hannover University of Applied Sciences and Arts in partnership with the [Computational Publishing Service](https://nfdi4culture.de/services/details/computational-publishing-service.html) from the Open Science Lab, [TIB](https://www.tib.eu/en/) – Leibniz Information Centre for Science and Technology and University Library, and with [NFDI4Culture](https://www.nfdi4culture.de/) – Consortium for Research Data on Material and Immaterial Cultural Heritage, as part of the National Research Data Infrastructure (NFDI).
 
-![](assets/logos/hsh-logo.png){fig-alt="Hochschule Hannover" width=180px} ![](assets/logos/tib-logo.png){fig-alt="TIB" width=180px} ![](assets/logos/nfdi4c-logo.jpg){fig-alt="NFDI4Culture" width=180px}
+![](assets/logos/hsh-logo.png){fig-alt="Hochschule Hannover" width=1.5in} ![](assets/logos/tib-logo.png){fig-alt="TIB" width=1.5in} ![](assets/logos/nfdi4c-logo.jpg){fig-alt="NFDI4Culture" width=1.5in}

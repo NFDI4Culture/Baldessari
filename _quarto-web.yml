@@ -1,0 +1,10 @@
+book:
+  appendices:
+    - data-sources.qmd
+    - imprint.qmd
+    - privacy-policy.qmd
+    - data-protection.qmd
+    - accessibility.qmd
+  page-footer:
+    center: |
+      [Imprint](imprint.qmd) · [Privacy Policy](privacy-policy.qmd) · [Data Protection](data-protection.qmd) · [Accessibility](accessibility.qmd)

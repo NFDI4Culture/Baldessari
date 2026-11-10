@@ -7,6 +7,13 @@ table {
   font-size: 0.85rem;
 }
 
+/* Very small legal links in the page footer */
+.nav-footer {
+  font-size: 0.7rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 /* Wide data tables scroll horizontally on small screens */
 .table-responsive,
 .cell-output-display {

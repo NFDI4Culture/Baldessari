@@ -32,8 +32,11 @@ jobs:
         with:
           tinytex: false
 
-      - name: Render book (HTML, PDF, DOCX, ePUB)
-        run: quarto render
+      - name: Render website (HTML with legal pages)
+        run: quarto render --profile web --to html
+
+      - name: Render PDF, DOCX, ePUB (without legal pages)
+        run: quarto render --to typst,docx,epub --no-clean
 
       - uses: actions/configure-pages@v5
 

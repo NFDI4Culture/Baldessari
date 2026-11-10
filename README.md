@@ -15,16 +15,20 @@ Published at <https://nfdi4culture.github.io/Baldessari/>.
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-quarto render
+quarto render --profile web --to html
+quarto render --to typst,docx,epub --no-clean
 ```
 
-On Linux or macOS activate with `source .venv/bin/activate`. The output is written to `_book/`. Use `quarto preview` for a live preview of the website.
+The `web` profile (`_quarto-web.yml`) adds the Imprint, Privacy Policy, Data Protection and Accessibility pages and the footer links to the website only; PDF, DOCX and ePUB are rendered without them. Run `quarto render` without a profile to build everything without the legal pages.
+
+On Linux or macOS activate with `source .venv/bin/activate`. The output is written to `_book/`. Use `quarto preview --profile web` for a live preview of the website.
 
 ## Layout
 
 | Path | Purpose |
 |------|---------|
 | `_quarto.yml` | Book and format configuration |
+| `_quarto-web.yml` | Web-only profile: legal pages and footer links |
 | `*.qmd`, `artworks.ipynb` | Chapters |
 | `src/baldessari/` | Python package: SPARQL client, CPS, Wikidata and DNB helpers, plots |
 | `src/baldessari/queries/` | SPARQL queries as `.rq` files |
