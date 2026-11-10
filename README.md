@@ -15,10 +15,10 @@ Published at <https://nfdi4culture.github.io/Baldessari/>.
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-quarto render --profile web --to html
-quarto render --to typst --no-clean
+quarto render --to typst
 quarto render --to docx --no-clean
 quarto render --to epub --no-clean
+quarto render --profile web --to html --no-clean
 ```
 
 The `web` profile (`_quarto-web.yml`) adds the Imprint, Privacy Policy, Data Protection and Accessibility pages and the footer links to the website only; PDF, DOCX and ePUB are rendered without them. Run `quarto render` without a profile to build everything without the legal pages.

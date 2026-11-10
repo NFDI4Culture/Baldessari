@@ -32,14 +32,14 @@ jobs:
         with:
           tinytex: false
 
-      - name: Render website (HTML with legal pages)
-        run: quarto render --profile web --to html
-
       - name: Render PDF, DOCX, ePUB (without legal pages)
         run: |
-          quarto render --to typst --no-clean
+          quarto render --to typst
           quarto render --to docx --no-clean
           quarto render --to epub --no-clean
+
+      - name: Render website last (HTML with legal pages)
+        run: quarto render --profile web --to html --no-clean
 
       - uses: actions/configure-pages@v5
 
