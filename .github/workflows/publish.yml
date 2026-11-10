@@ -36,7 +36,10 @@ jobs:
         run: quarto render --profile web --to html
 
       - name: Render PDF, DOCX, ePUB (without legal pages)
-        run: quarto render --to typst,docx,epub --no-clean
+        run: |
+          quarto render --to typst --no-clean
+          quarto render --to docx --no-clean
+          quarto render --to epub --no-clean
 
       - uses: actions/configure-pages@v5
 
